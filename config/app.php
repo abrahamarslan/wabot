@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'WA Bot'),
 
     /*
     |--------------------------------------------------------------------------
@@ -174,6 +174,12 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
+        Jenssegers\Date\DateServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
+        Spatie\EloquentSortable\EloquentSortableServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+
 
     ],
 
@@ -227,6 +233,11 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Form' => Collective\Html\FormFacde::class,
+        'Html' => Collective\Html\HtmlFacde::class,
+        'Date' => Jenssegers\Date\Date::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Twilio' => 'Aloha\Twilio\Support\Laravel\Facade',
 
     ],
 
