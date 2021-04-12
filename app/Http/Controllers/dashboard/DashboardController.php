@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers\dashboard;
 
-use App\Http\Controllers\Common\DefaultController;
+use App\Http\Controllers\common\DefaultController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 

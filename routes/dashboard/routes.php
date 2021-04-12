@@ -4,6 +4,6 @@ use Illuminate\Support\Facades\Route;
  * Dashboard
  */
 Route::group(array('prefix' => 'dashboard'), function () {
-    Route::get('/', array('as' => 'dashboard.index', 'uses' => 'Dashboard/DashboardController@index'));
+    Route::get('/', array('uses'=>'App\Http\Controllers\dashboard\DashboardController@index', 'as'=>'dashboard.index'));
 
 });
