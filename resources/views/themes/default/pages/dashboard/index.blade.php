@@ -485,6 +485,11 @@
 
 @stop
 @section('custom_script')
+    <!-- knob plugin -->
+    <script src="{!! asset('themes/default/libs/jquery-knob/jquery.knob.min.js') !!}"></script>
+    <!--Morris Chart-->
+    <script src="{!! asset('themes/default/libs/morris-js/morris.min.js') !!}"></script>
+    <script src="{!! asset('themes/default/libs/raphael/raphael.min.js') !!}"></script>
     <!-- Dashboard init js-->
     <script src="{!! asset('themes/default/js/pages/dashboard.init.js') !!}"></script>
 @stop
