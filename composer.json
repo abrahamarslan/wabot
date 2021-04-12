@@ -6,7 +6,6 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
-        "aloha/twilio": "^4.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.3",
@@ -25,7 +24,8 @@
         "spatie/laravel-permission": "^4.0",
         "spatie/laravel-searchable": "^1.9",
         "spatie/laravel-tags": "^3.1",
-        "spatie/laravel-translatable": "^4.6"
+        "spatie/laravel-translatable": "^4.6",
+        "twilio/sdk": "^6.21"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

@@ -236,9 +236,7 @@ return [
         'Form' => Collective\Html\FormFacde::class,
         'Html' => Collective\Html\HtmlFacde::class,
         'Date' => Jenssegers\Date\Date::class,
-        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-        'Twilio' => 'Aloha\Twilio\Support\Laravel\Facade',
-
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class
     ],
 
 ];

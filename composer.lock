@@ -4,82 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "76240aac2cf365b77bfbed480f17500a",
+    "content-hash": "557fb776db44843498eed92bef2190b4",
     "packages": [
-        {
-            "name": "aloha/twilio",
-            "version": "4.0.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/aloha/laravel-twilio.git",
-                "reference": "d4174bbcb8caa41188088612f672677a0d3a3321"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/aloha/laravel-twilio/zipball/d4174bbcb8caa41188088612f672677a0d3a3321",
-                "reference": "d4174bbcb8caa41188088612f672677a0d3a3321",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.5.0",
-                "twilio/sdk": "5.*,<5.42.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^1.9",
-                "illuminate/console": "~4||~5",
-                "illuminate/support": "~4||~5",
-                "phpunit/phpunit": "~4.5"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Aloha\\Twilio\\Support\\Laravel\\ServiceProvider"
-                    ],
-                    "aliases": {
-                        "Twilio": "Aloha\\Twilio\\Support\\Laravel\\Facade"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Aloha\\Twilio\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Travis J Ryan",
-                    "email": "travisjryan@gmail.com"
-                },
-                {
-                    "name": "Hannes Van De Vreken",
-                    "email": "vandevreken.hannes@gmail.com"
-                }
-            ],
-            "description": "Twilio API for Laravel",
-            "homepage": "https://github.com/aloha/laravel-twilio",
-            "keywords": [
-                "ivr",
-                "laravel",
-                "sms",
-                "twilio"
-            ],
-            "support": {
-                "issues": "https://github.com/aloha/laravel-twilio/issues",
-                "source": "https://github.com/aloha/laravel-twilio/tree/4.0.4"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/hannesvdvreken",
-                    "type": "github"
-                }
-            ],
-            "time": "2020-07-17T22:52:45+00:00"
-        },
         {
             "name": "asm89/stack-cors",
             "version": "v2.0.3",
@@ -6607,25 +6533,25 @@
         },
         {
             "name": "twilio/sdk",
-            "version": "5.41.1",
+            "version": "6.21.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twilio/twilio-php.git",
-                "reference": "b10341d50d647b1015dd264c530f3b8bca345b6c"
+                "reference": "bccca0cf5d853c29cbc8b676558e249b0132404f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/b10341d50d647b1015dd264c530f3b8bca345b6c",
-                "reference": "b10341d50d647b1015dd264c530f3b8bca345b6c",
+                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/bccca0cf5d853c29cbc8b676558e249b0132404f",
+                "reference": "bccca0cf5d853c29cbc8b676558e249b0132404f",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5.0"
+                "php": ">=7.1.0"
             },
             "require-dev": {
-                "apigen/apigen": "^4.1",
-                "guzzlehttp/guzzle": "^6.3",
-                "phpunit/phpunit": ">=4.5"
+                "guzzlehttp/guzzle": "^6.3 || ^7.0",
+                "phpunit/phpunit": ">=4.5",
+                "theseer/phpdox": "^0.12.0"
             },
             "suggest": {
                 "guzzlehttp/guzzle": "An HTTP client to execute the API requests"
@@ -6655,9 +6581,9 @@
             ],
             "support": {
                 "issues": "https://github.com/twilio/twilio-php/issues",
-                "source": "https://github.com/twilio/twilio-php/tree/5.41.1"
+                "source": "https://github.com/twilio/twilio-php/tree/6.21.0"
             },
-            "time": "2019-12-18T19:43:22+00:00"
+            "time": "2021-04-07T19:07:34+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
