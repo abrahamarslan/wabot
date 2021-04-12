@@ -2,7 +2,7 @@
 <html lang="en">
 @include('themes.default._partials.header')
 <body class="authentication-bg">
-<div class="account-pages mt-5 mb-5">
+<div class="account-pages mt-5 mb-5" id="app">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8 col-lg-6 col-xl-5">
@@ -64,6 +64,7 @@
         <!-- end row -->
     </div>
     <!-- end container -->
+    @include('themes.default._partials.notification')
 </div>
 <!-- end page -->
 @include('themes.default._partials.scripts')

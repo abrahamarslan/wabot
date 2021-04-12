@@ -23,5 +23,9 @@
         "vue": "^2.5.17",
         "vue-loader": "^15.9.5",
         "vue-template-compiler": "^2.6.10"
+    },
+    "dependencies": {
+        "@syncfusion/ej2-icons": "^19.1.54",
+        "@syncfusion/ej2-vue-notifications": "^19.1.54"
     }
 }

@@ -28,7 +28,7 @@ class registration extends Mailable
      */
     public function build()
     {
-        return $this->from('info@vikinger.com')->subject('Registration | ' . env('APP_NAME'))
-            ->view('emails.registration');
+        return $this->from('info@ashajobs.com')->subject('Registration | ' . env('APP_NAME'))
+            ->view('themes.default.emails.authentication.registration');
     }
 }

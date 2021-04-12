@@ -52,7 +52,7 @@ class RegistrationController extends DefaultController
                             // Data to be used on the email view
                             $data = array(
                                 'user'          => $user,
-                                'link' => route('activation.getActivateUser', [$user->id, $activation->code]),
+                                'link' => route('authentication.activation.create', [$user->id, $activation->code]),
                             );
                             \Mail::to($user->email)->send(new registration($data));
                         }
@@ -62,7 +62,7 @@ class RegistrationController extends DefaultController
                     }
                     session()->flash('success_message',__('authentication/messages.success.register'));
                     //Redirect to login page
-                    return redirect()->route("authentication.getLogin");
+                    return redirect()->route("authentication.login.index");
                 }
             }
             //Failed to register user
@@ -76,6 +76,7 @@ class RegistrationController extends DefaultController
                 ->log(__('authentication/log.registration.action'));
         }
         catch(\Exception $e) {
+            dd($e);
             //Exception Message log
             activity()
                 ->withProperties([
@@ -87,6 +88,6 @@ class RegistrationController extends DefaultController
                 ->log(__('authentication/log.registration.action'));
         }
         $this->messageBag->add('error', __('authentication/log.registration.error_message'));
-        return redirect()->route("authentication.getLogin")->withErrors($this->messageBag);
+        return redirect()->route("authentication.login.index")->withErrors($this->messageBag);
     }
 }

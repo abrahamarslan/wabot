@@ -2,7 +2,7 @@
 <html lang="en">
 @include('themes.default._partials.header')
 <body class="authentication-bg">
-<div class="account-pages mt-5 mb-5">
+<div class="account-pages mt-5 mb-5" id="app">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8 col-lg-6 col-xl-5">
@@ -25,16 +25,16 @@
                         {!! Form::token() !!}
 
                             <div class="form-group">
-                                <label for="emailaddress">Name</label>
+                                <label for="name">Name</label>
                                 {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'register-name', 'autocomplete' => 'off'] ) !!}
                             </div>
                             <div class="form-group">
-                                <label for="emailaddress">Username</label>
+                                <label for="username">Username</label>
                                 {!! Form::text('username', null, ['class' => 'form-control', 'id' => 'login-username', 'autocomplete' => 'off'] ) !!}
                             </div>
                             <div class="form-group">
                                 <label for="emailaddress">Email address</label>
-                                {!! Form::text('email', null, ['class' => 'form-control', 'id' => 'login-username', 'autocomplete' => 'off'] ) !!}
+                                {!! Form::text('email', null, ['class' => 'form-control', 'id' => 'login-email', 'autocomplete' => 'off'] ) !!}
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
@@ -66,6 +66,7 @@
         <!-- end row -->
     </div>
     <!-- end container -->
+    @include('themes.default._partials.notification')
 </div>
 <!-- end page -->
 @include('themes.default._partials.scripts')

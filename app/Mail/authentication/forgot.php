@@ -29,6 +29,6 @@ class forgot extends Mailable
     public function build()
     {
         return $this->from('info@vikinger.com')->subject('Forgot Password | ' . env('APP_NAME'))
-            ->view('emails.forgot');
+            ->view('themes.default.emails.authentication.forgot');
     }
 }
