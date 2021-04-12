@@ -18,33 +18,35 @@
                     <div class="card-body p-4">
 
                         <div class="text-center mb-4">
-                            <h4 class="text-uppercase mt-0">Sign In</h4>
+                            <h4 class="text-uppercase mt-0">Register</h4>
                         </div>
 
-                        {!! Form::open(['route' => 'authentication.login.create', 'method' => 'POST', 'class' => 'form', 'novalidate' => 'novalidate']) !!}
+                        {!! Form::open(['route' => 'authentication.registration.create', 'method' => 'POST', 'class' => 'form', 'novalidate' => 'novalidate']) !!}
                         {!! Form::token() !!}
 
-                            <div class="form-group mb-3">
+                            <div class="form-group">
+                                <label for="emailaddress">Name</label>
+                                {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'register-name', 'autocomplete' => 'off'] ) !!}
+                            </div>
+                            <div class="form-group">
+                                <label for="emailaddress">Username</label>
+                                {!! Form::text('username', null, ['class' => 'form-control', 'id' => 'login-username', 'autocomplete' => 'off'] ) !!}
+                            </div>
+                            <div class="form-group">
                                 <label for="emailaddress">Email address</label>
                                 {!! Form::text('email', null, ['class' => 'form-control', 'id' => 'login-username', 'autocomplete' => 'off'] ) !!}
                             </div>
-
-                            <div class="form-group mb-3">
+                            <div class="form-group">
                                 <label for="password">Password</label>
                                 {!! Form::password('password',['class' => 'form-control', 'id' => 'login-password', 'autocomplete' => 'off']) !!}
                             </div>
-
-                            <div class="form-group mb-3">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" name="login_remember" class="custom-control-input" id="checkbox-signin" checked>
-                                    <label class="custom-control-label" for="checkbox-signin">Remember me</label>
-                                </div>
+                            <div class="form-group">
+                                <label for="password">Repeat Password</label>
+                                {!! Form::password('password_confirm',['class' => 'form-control', 'id' => 'register-password-repeat', 'autocomplete' => 'off']) !!}
                             </div>
-
                             <div class="form-group mb-0 text-center">
-                                <button class="btn btn-primary btn-block" type="submit"> Log In </button>
+                                <button class="btn btn-primary btn-block" type="submit"> Sign Up </button>
                             </div>
-
                         {!! Form::close() !!}
 
                     </div> <!-- end card-body -->

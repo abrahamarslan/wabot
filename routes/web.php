@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 include 'dashboard/routes.php';
 include 'authentication/routes.php';
+include 'role/routes.php';
 Route::get('/', function () {
     return view('welcome');
 });
