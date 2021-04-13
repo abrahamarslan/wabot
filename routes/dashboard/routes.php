@@ -15,6 +15,12 @@ Route::group(array('prefix' => 'dashboard', 'middleware' => 'App\Http\Middleware
         Route::get('/edit/{id}', array('uses'=>'App\Http\Controllers\campaign\CampaignController@update', 'as'=>'campaign.update'));
         Route::post('/edit/{id}', array('uses'=>'App\Http\Controllers\campaign\CampaignController@postUpdate', 'as'=>'campaign.postUpdate'));
         Route::get('/delete/{id}', array('uses'=>'App\Http\Controllers\campaign\CampaignController@delete', 'as'=>'campaign.delete'));
+        Route::get('/results/{id}', array('uses'=>'App\Http\Controllers\campaign\CampaignController@getResults', 'as'=>'campaign.results'));
+
+        Route::get('/import/{id}', array('uses'=>'App\Http\Controllers\campaign\CampaignContactController@getImport', 'as'=>'campaign.contact.import'));
+        Route::post('/import/{id}', array('uses'=>'App\Http\Controllers\campaign\CampaignContactController@postImport', 'as'=>'campaign.contact.postImport'));
+        Route::get('/contacts/{id}', array('uses'=>'App\Http\Controllers\campaign\CampaignContactController@getContacts', 'as'=>'campaign.contact.view'));
+
     });
 
 

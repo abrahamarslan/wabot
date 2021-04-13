@@ -24,7 +24,7 @@ class CampaignController extends DefaultController
             if($user = Sentinel::check()) {
                 $this->data['user'] = $user;
             }
-            $this->data['records'] = Campaign::where('id', '!=', null)->get();
+            $this->data['records'] = Campaign::where('id', '!=', null)->orderBy('created_at','DESC')->get();
             return view('themes.default.pages.campaign.index', $this->data);
         } catch (\Exception $e) {
             $this->messageBag->add('exception_message', $e->getMessage());
