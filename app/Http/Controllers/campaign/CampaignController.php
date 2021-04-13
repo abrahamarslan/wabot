@@ -1,32 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\dashboard;
+namespace App\Http\Controllers\campaign;
 
 use App\Http\Controllers\common\DefaultController;
 use App\Http\Controllers\Controller;
-use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Http\Request;
 
-class DashboardController extends DefaultController
+class CampaignController extends DefaultController
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
-     * Dashboard
-     */
     public function index() {
         try {
-            if($user = Sentinel::check()) {
-                $this->data['user'] = $user;
-                return view('themes.default.pages.dashboard.index', $this->data);
-            }
+            return view('themes.default.pages.campaign.index');
         } catch (\Exception $e) {
             $this->messageBag->add('exception_message', $e->getMessage());
             activity()
-                ->by('DashboardController')
+                ->by('CampaignController')
                 ->withProperties([
                     'content_id' => 0, // Exception
                     'contentType' => 'Exception',

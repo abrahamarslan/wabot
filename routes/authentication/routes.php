@@ -7,6 +7,7 @@ Route::group(array('prefix' => 'authentication'), function () {
     //Login
     Route::get('/login', array('uses'=>'App\Http\Controllers\authentication\AuthenticationController@index', 'as'=>'authentication.login.index'));
     Route::post('/login', array('uses'=>'App\Http\Controllers\authentication\AuthenticationController@create', 'as'=>'authentication.login.create'));
+    Route::post('/logout', array('uses'=>'App\Http\Controllers\authentication\AuthenticationController@getLogout', 'as'=>'authentication.login.getLogout'));
 
     //Register
     Route::get('/register', array('uses'=>'App\Http\Controllers\authentication\RegistrationController@index', 'as'=>'authentication.registration.index'));

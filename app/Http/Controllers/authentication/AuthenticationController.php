@@ -20,7 +20,7 @@ class AuthenticationController extends DefaultController
     public function index() {
         if(Sentinel::check()) {
             Alert::warning('You are already logged in!');
-            return redirect()->route('dashboard.index');
+            //return redirect()->route('dashboard.index');
         }
         return view('themes.default.pages.authentication.index');
     }
