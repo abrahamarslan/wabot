@@ -6,7 +6,7 @@ use App\Models\common\DefaultModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Campaign extends DefaultModel
+class Contact extends DefaultModel
 {
     use HasFactory;
     protected $guarded = [];
@@ -19,11 +19,12 @@ class Campaign extends DefaultModel
     public function getTableColumns() {
         return $this->getConnection()->getSchemaBuilder()->getColumnListing($this->getTable());
     }
-
     /**
-     * Has-many relation with contacts
+     * A contact belongs to a campaign
+     *
      */
-    public function contacts() {
-        return $this->hasMany(Contact::class, 'campaign_id');
+    public function campaign()
+    {
+        return $this->belongsTo(Campaign::class);
     }
 }

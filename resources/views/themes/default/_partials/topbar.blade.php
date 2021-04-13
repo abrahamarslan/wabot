@@ -27,7 +27,7 @@
 
     <!-- LOGO -->
     <div class="logo-box">
-        <a href="index.html" class="logo logo-dark text-center">
+        <a href="#" class="logo logo-dark text-center">
                         <span class="logo-lg">
                             <img src="{!! asset('logo.png') !!}" alt="" height="16">
                         </span>
@@ -35,7 +35,7 @@
                             <img src="{!! asset('logo-sm.png') !!}" alt="" height="24">
                         </span>
         </a>
-        <a href="index.html" class="logo logo-light text-center">
+        <a href="#" class="logo logo-light text-center">
                         <span class="logo-lg">
                             <img src="{!! asset('logo.png') !!}" alt="" height="16">
                         </span>

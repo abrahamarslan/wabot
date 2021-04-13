@@ -11,6 +11,7 @@
         @yield('content')
     </div>
     <!-- END wrapper -->
+    @include('themes.default._partials.notification')
 </div>
 @include('themes.default._partials.scripts')
 </body>

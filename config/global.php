@@ -20,6 +20,11 @@ return array(
         'upload_folder_seo_path_original'       => '/images/campaign/original/',
         'upload_folder_seo_path_resized'        => '/images/campaign/resized/',
     ),
+    'contacts' => array(
+        'upload_folder_path'                    => '/uploads/contacts/',
+        'upload_folder_path_original'           => '/uploads/contacts/original/',
+        'upload_folder_path_resized'            => '/uploads/contacts/resized/'
+    ),
     'user' => array(
         'default_avatar'                        => '/images/user/original/default.png',
         'upload_folder_path'                    => '/images/user/',
