@@ -1,5 +1,9 @@
 @extends('themes.default._layouts.default')
-@section('title', 'Create Campaign')
+@if($create)
+    @section('title', 'Create Campaign')
+@else
+    @section('title', 'Update Campaign')
+@endif
 @section('custom_style')
     <link href="{!! asset('themes/default/libs/bootstrap-datepicker/bootstrap-datepicker.css') !!}" rel="stylesheet">
 @stop
@@ -12,15 +16,26 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card-box">
+                            @if($create)
                             <h4 class="header-title">New Record</h4>
                             <p class="sub-header">
                                 Create a new record
                             </p>
+                            @else
+                            <h4 class="header-title">Update Record</h4>
+                            <p class="sub-header">
+                                Update record
+                            </p>
+                            @endif
 
                             <div class="row">
                                 <div class="col-12">
                                     <div class="p-2">
-                                        {!! Form::open(['route' => 'campaign.create', 'method' => 'POST', 'class' => 'form-horizontal']) !!}
+                                        @if($create)
+                                            {!! Form::open(['route' => 'campaign.create', 'method' => 'POST', 'class' => 'form-horizontal']) !!}
+                                        @else
+                                            {{Form::model($record, array('url' => URL::route('campaign.postUpdate', $record->id), 'files' => true,'id' => 'form', 'class' => 'form-horizontal form-bordered form-row-stripped'))}}
+                                        @endif
                                         {!! Form::token() !!}
 
                                             <div class="form-group row">
