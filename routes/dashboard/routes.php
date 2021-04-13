@@ -21,6 +21,11 @@ Route::group(array('prefix' => 'dashboard', 'middleware' => 'App\Http\Middleware
         Route::post('/import/{id}', array('uses'=>'App\Http\Controllers\campaign\CampaignContactController@postImport', 'as'=>'campaign.contact.postImport'));
         Route::get('/contacts/{id}', array('uses'=>'App\Http\Controllers\campaign\CampaignContactController@getContacts', 'as'=>'campaign.contact.view'));
 
+        Route::get('/contact/delete/{id}', array('uses'=>'App\Http\Controllers\campaign\CampaignContactController@delete', 'as'=>'campaign.contact.delete'));
+        Route::get('/contact/results/{id}', array('uses'=>'App\Http\Controllers\campaign\CampaignContactController@getResults', 'as'=>'campaign.contact.results'));
+        Route::get('/contact/history/{id}', array('uses'=>'App\Http\Controllers\campaign\CampaignContactController@getHistory', 'as'=>'campaign.contact.history'));
+        Route::get('/contact/history/delete/{id}', array('uses'=>'App\Http\Controllers\campaign\CampaignContactController@deleteHistory', 'as'=>'campaign.contact.deleteHistory'));
+
     });
 
 

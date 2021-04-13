@@ -81,4 +81,82 @@ class CampaignContactController extends DefaultController
             return redirect()->back()->withInput()->withErrors(['error_msg' => $e->getMessage()]);
         }
     }
+
+    public function getContacts(Campaign $id) {
+        try {
+            if($user = Sentinel::check()) {
+                $this->data['user'] = $user;
+            }
+            $this->data['record'] = $id;
+            $this->data['records'] = $id->contacts()->orderBy('created_at','DESC')->get();
+            return view('themes.default.pages.campaign.import.view', $this->data);
+        } catch (\Exception $e) {
+            $this->messageBag->add('exception_message', $e->getMessage());
+            activity()
+                ->by('CampaignController')
+                ->withProperties([
+                    'content_id' => 0, // Exception
+                    'contentType' => 'Exception',
+                    'action' => 'index',
+                    'description' => 'DefaultController',
+                    'details' => 'Error in creating view: ' . $e->getMessage(),
+                    'data' => json_encode($e)
+                ])
+                ->causedBy('index')
+                ->log($e->getMessage());
+            return redirect()->back()->withInput()->withErrors(['error_msg' => $e->getMessage()]);
+        }
+    }
+
+    public function delete(Request $request, Contact $id) {
+        try {
+            if($user = Sentinel::check()) {
+                $this->data['user'] = $user;
+            }
+            $id->delete();
+            session()->flash('success_message','Record deleted successfully!');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            $this->messageBag->add('exception_message', $e->getMessage());
+            activity()
+                ->by('CampaignController')
+                ->withProperties([
+                    'content_id' => 0, // Exception
+                    'contentType' => 'Exception',
+                    'action' => 'index',
+                    'description' => 'DefaultController',
+                    'details' => 'Error in creating view: ' . $e->getMessage(),
+                    'data' => json_encode($e)
+                ])
+                ->causedBy('index')
+                ->log($e->getMessage());
+            return redirect()->back()->withInput()->withErrors(['error_msg' => $e->getMessage()]);
+        }
+    }
+
+    public function getResults(Request $request, Contact $id) {
+        try {
+            if($user = Sentinel::check()) {
+                $this->data['user'] = $user;
+            }
+            $this->data['record'] = $id;
+            $this->data['create'] = true;
+            return view('themes.default.pages.campaign.import.history', $this->data);
+        } catch (\Exception $e) {
+            $this->messageBag->add('exception_message', $e->getMessage());
+            activity()
+                ->by('CampaignContactController')
+                ->withProperties([
+                    'content_id' => 0, // Exception
+                    'contentType' => 'Exception',
+                    'action' => 'index',
+                    'description' => 'CampaignContactController',
+                    'details' => 'Error in creating view: ' . $e->getMessage(),
+                    'data' => json_encode($e)
+                ])
+                ->causedBy('index')
+                ->log($e->getMessage());
+            return redirect()->back()->withInput()->withErrors(['error_msg' => $e->getMessage()]);
+        }
+    }
 }
