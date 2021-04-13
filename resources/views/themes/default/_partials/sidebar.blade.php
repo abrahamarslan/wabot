@@ -41,8 +41,8 @@
                         <span class="menu-arrow"></span>
                     </a>
                     <ul class="nav-second-level" aria-expanded="false">
-                        <li><a href="#">List</a></li>
-                        <li><a href="#">Create</a></li>
+                        <li><a href="{!! route('campaign.index') !!}">List</a></li>
+                        <li><a href="{!! route('campaign.create') !!}">Create</a></li>
                     </ul>
                 </li>
 
