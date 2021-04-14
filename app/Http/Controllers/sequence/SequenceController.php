@@ -25,7 +25,7 @@ class SequenceController extends DefaultController
             if($user = Sentinel::check()) {
                 $this->data['user'] = $user;
             }
-            $this->data['records'] = Sequence::where('id', '!=', null)->orderBy('created_at','DESC')->get();
+            $this->data['records'] = $campaign->sequences()->orderBy('order','ASC')->get();
             return view('themes.default.pages.sequence.index', $this->data);
         } catch (\Exception $e) {
             $this->messageBag->add('exception_message', $e->getMessage());
@@ -45,10 +45,14 @@ class SequenceController extends DefaultController
         }
     }
 
-    public function update(Request $request, Campaign $id) {
+    public function update(Request $request, Sequence $id) {
         try {
             if($user = Sentinel::check()) {
                 $this->data['user'] = $user;
+            }
+            $this->data['campaigns'] = Campaign::where('status','=','Active')->orderBy('created_at','DESC')->pluck('title','id');
+            if(empty($this->data['campaigns'])) {
+                return redirect()->back()->withInput()->withErrors(['error_msg' => 'You must create a campaign first']);
             }
             $this->data['record'] = $id;
             $this->data['create'] = false;
@@ -102,7 +106,6 @@ class SequenceController extends DefaultController
 
     public function store(SequenceStoreRequest $request) {
         try {
-            dd($request->all());
             //Add record
             $record                         =           $this->save($request, true);
             //Flash success
@@ -129,10 +132,6 @@ class SequenceController extends DefaultController
 
     public function postUpdate(SequenceStoreRequest $request, Sequence $id) {
         try {
-            $request->request->add([
-                'slug' => Str::slug($request->get('title')),
-                'url_slug' => Str::slug($request->get('title'))
-            ]);
             //Add record
             $record                         =           $this->save($request, false, $id);
             //Flash success
