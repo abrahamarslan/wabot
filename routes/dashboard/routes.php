@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Route;
 Route::group(array('prefix' => 'dashboard', 'middleware' => 'App\Http\Middleware\authentication\Authentication'), function () {
     Route::get('/', array('uses'=>'App\Http\Controllers\dashboard\DashboardController@index', 'as'=>'dashboard.index'));
 
-
     //Campaigns
     Route::group(array('prefix' => 'campaign'), function () {
         Route::get('/', array('uses'=>'App\Http\Controllers\campaign\CampaignController@index', 'as'=>'campaign.index'));
@@ -28,5 +27,17 @@ Route::group(array('prefix' => 'dashboard', 'middleware' => 'App\Http\Middleware
 
     });
 
+    //Sequence
+    Route::group(array('prefix' => 'sequence'), function () {
+        Route::get('/view/{campaign}', array('uses'=>'App\Http\Controllers\sequence\SequenceController@index', 'as'=>'sequence.index'));
+        Route::get('/create', array('uses'=>'App\Http\Controllers\sequence\SequenceController@create', 'as'=>'sequence.create'));
+        Route::post('/create', array('uses'=>'App\Http\Controllers\sequence\SequenceController@store', 'as'=>'sequence.store'));
+        Route::get('/edit/{id}', array('uses'=>'App\Http\Controllers\sequence\SequenceController@update', 'as'=>'sequence.update'));
+        Route::post('/edit/{id}', array('uses'=>'App\Http\Controllers\sequence\SequenceController@postUpdate', 'as'=>'sequence.postUpdate'));
+        Route::get('/delete/{id}', array('uses'=>'App\Http\Controllers\sequence\SequenceController@delete', 'as'=>'sequence.delete'));
+        Route::get('/results/{id}', array('uses'=>'App\Http\Controllers\sequence\SequenceController@getResults', 'as'=>'sequence.results'));
 
+        Route::get('/sort/{campaign}', array('uses'=>'App\Http\Controllers\sequence\SequenceController@getSort', 'as'=>'sequence.getSort'));
+        Route::post('/sort/{campaign}', array('uses'=>'App\Http\Controllers\sequence\SequenceController@postSort', 'as'=>'sequence.postSort'));
+    });
 });
