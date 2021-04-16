@@ -110,7 +110,7 @@ class SequenceController extends DefaultController
             $record                         =           $this->save($request, true);
             //Flash success
             session()->flash('success_message','New record successfully created!');
-            return redirect()->route('campaign.index');
+            return redirect()->route('sequence.index', $request->get('campaign_id'));
         } catch (\Exception $e) {
             dd($e);
             $this->messageBag->add('exception_message', $e->getMessage());
@@ -136,7 +136,7 @@ class SequenceController extends DefaultController
             $record                         =           $this->save($request, false, $id);
             //Flash success
             session()->flash('success_message','Record updated successfully!');
-            return redirect()->route('campaign.index');
+            return redirect()->route('sequence.index', $request->get('campaign_id'));
         } catch (\Exception $e) {
             dd($e);
             $this->messageBag->add('exception_message', $e->getMessage());
