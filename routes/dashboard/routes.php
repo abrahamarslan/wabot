@@ -38,6 +38,6 @@ Route::group(array('prefix' => 'dashboard', 'middleware' => 'App\Http\Middleware
         Route::get('/results/{id}', array('uses'=>'App\Http\Controllers\sequence\SequenceController@getResults', 'as'=>'sequence.results'));
 
         Route::get('/sort/{campaign}', array('uses'=>'App\Http\Controllers\sequence\SequenceController@getSort', 'as'=>'sequence.getSort'));
-        Route::post('/sort/{campaign}', array('uses'=>'App\Http\Controllers\sequence\SequenceController@postSort', 'as'=>'sequence.postSort'));
+        Route::post('/sort', array('uses'=>'App\Http\Controllers\sequence\SequenceController@postSort', 'as'=>'sequence.postSort'));
     });
 });

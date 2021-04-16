@@ -181,4 +181,76 @@ class SequenceController extends DefaultController
             return redirect()->back()->withInput()->withErrors(['error_msg' => $e->getMessage()]);
         }
     }
+
+    public function getSort(Campaign $campaign) {
+        try {
+            if($user = Sentinel::check()) {
+                $this->data['user'] = $user;
+            }
+            $this->data['record'] = $campaign;
+            if(!$campaign->sequences()->count() > 0) {
+                return redirect()->back()->withInput()->withErrors(['error_msg' => 'You must create sequence for this campaign first']);
+            }
+            $this->data['sequences'] = $campaign->sequences()->orderBy('order','ASC')->get();
+            $this->data['create'] = true;
+            return view('themes.default.pages.sequence.sort', $this->data);
+        } catch (\Exception $e) {
+            $this->messageBag->add('exception_message', $e->getMessage());
+            activity()
+                ->by('CampaignController')
+                ->withProperties([
+                    'content_id' => 0, // Exception
+                    'contentType' => 'Exception',
+                    'action' => 'index',
+                    'description' => 'DefaultController',
+                    'details' => 'Error in creating view: ' . $e->getMessage(),
+                    'data' => json_encode($e)
+                ])
+                ->causedBy('index')
+                ->log($e->getMessage());
+            return redirect()->back()->withInput()->withErrors(['error_msg' => $e->getMessage()]);
+        }
+    }
+
+    public function postSort(Request $request) {
+        try {
+            $data = $request->all();
+            $order = 1;
+            foreach ($data as $row) {
+                $record = Sequence::findOrFail($row['id']);
+                $record->order = $order;
+                $record->save();
+                $order++;
+            }
+            $this->data['create'] = true;
+            $data = [
+                'type' => 'success',
+                'message' => 'Record updated successfully.',
+                'data' => [],
+                'code' => 200
+            ];
+            return response()->json($data,200);
+        } catch (\Exception $e) {
+            $this->messageBag->add('exception_message', $e->getMessage());
+            activity()
+                ->by('CampaignController')
+                ->withProperties([
+                    'content_id' => 0, // Exception
+                    'contentType' => 'Exception',
+                    'action' => 'index',
+                    'description' => 'DefaultController',
+                    'details' => 'Error in creating view: ' . $e->getMessage(),
+                    'data' => json_encode($e)
+                ])
+                ->causedBy('index')
+                ->log($e->getMessage());
+            $data = [
+                'type' => 'error',
+                'message' => 'Some error occurred in creating the record.',
+                'data' => null,
+                'code' => 500
+            ];
+            return response()->json($data,500);
+        }
+    }
 }
