@@ -43,6 +43,9 @@ Route::group(array('prefix' => 'dashboard', 'middleware' => 'App\Http\Middleware
         Route::get('/conditionals/{campaign}', array('uses'=>'App\Http\Controllers\sequence\ConditionalController@getConditionals', 'as'=>'sequence.getConditionals'));
         Route::post('/conditionals', array('uses'=>'App\Http\Controllers\sequence\ConditionalController@postConditionals', 'as'=>'sequence.postConditionals'));
 
+        Route::post('/get-options', array('uses'=>'App\Http\Controllers\sequence\ConditionalController@postConditionalOptions', 'as'=>'sequence.postConditionalOptions'));
+        Route::post('/add-conditional', array('uses'=>'App\Http\Controllers\sequence\ConditionalController@postAddConditional', 'as'=>'sequence.postAddConditional'));
+
 
     });
 });

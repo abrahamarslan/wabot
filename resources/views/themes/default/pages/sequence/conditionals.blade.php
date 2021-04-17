@@ -56,7 +56,11 @@
                                                         <div class="form-group row">
                                                             <label class="col-md-2 col-form-label" for="example-helping"><strong> If </strong></label>
                                                             <div class="col-md-10">
-                                                                {{Form::select('sequence_id',$sequences->except($row->id),null, array('id' => 'sequence_id_' . $row->id, 'class' => 'form-control sequence', 'data-id' => $row->id))}}
+                                                                <select id="sequence_id_{!! $row->id !!}" data-id="{!! $row->id !!}" class="form-control sequence">
+                                                                    @foreach($sequences->except($row->id) as $k => $v)
+                                                                        <option value="{!! $k !!}" class="sequence-option" data-parent="{!! $row->id !!}" data-sequence="{!! $k !!}" data-id="{!! $k !!}">{!! $v !!}</option>
+                                                                    @endforeach
+                                                                </select>
                                                             </div>
                                                         </div>
                                                         <?php
@@ -69,13 +73,19 @@
                                                         <div class="form-group row">
                                                             <label class="col-md-2 col-form-label" for="example-helping"><strong> Is </strong></label>
                                                             <div class="col-md-10">
-                                                                {{Form::select('sequence_answer',$row->options,null, array('id' => 'record-campaigns', 'class' => 'form-control'))}}
+                                                            <select id="if_option_id_{!! $row->id !!}" data-id="{!! $row->id !!}" class="form-control options" disabled>
+
+                                                            </select>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label class="col-md-2 col-form-label" for="example-helping"><strong> Else </strong></label>
                                                             <div class="col-md-10">
-                                                                {{Form::select('campaign_id',$sequences,null, array('id' => 'record-campaigns', 'class' => 'form-control'))}}
+                                                                <select id="else_sequence_id_{!! $row->id !!}" data-id="{!! $row->id !!}" class="form-control sequence-else" disabled>
+                                                                    @foreach($sequences->except($row->id) as $k => $v)
+                                                                        <option value="{!! $k !!}" class="sequence-else-option" data-parent="{!! $row->id !!}" data-sequence="{!! $k !!}" data-id="{!! $k !!}">{!! $v !!}</option>
+                                                                    @endforeach
+                                                                </select>
                                                             </div>
                                                         </div>
                                                     @endif
@@ -111,15 +121,70 @@
     <script src="{!! asset('themes/default/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') !!}"></script>
     <script src="{!! asset('themes/default/libs/jquery.repeater.js') !!}"></script>
     <script type="text/javascript">
-        function changeSequence(sequenceID) {
+        const url = '{!! route('sequence.postConditionalOptions') !!}';
+        function populateIfOptions(data, parentID){
+            //console.log(data);
+            //const optionID = $(this).find("option:selected").attr("data-id");
+            //Populate the Options box
+            //<option value="{!! $k !!}" class="sequence-option" data-parent="{!! $row->id !!}" data-sequence="{!! $k !!}" data-id="{!! $k !!}">{!! $v !!}</option>
 
+            if(data.data) {
+                var hasOptions = false;
+                const ifSelect = $('#if_option_id_' + parentID);
+                $.each(data.data, function(key, val) {
+                    if(val !== '') {
+                        hasOptions = true;
+                        console.log('val', val)
+                        //optionsValues += '<option value="' + item.key + '">' + item.value + '</option>';
+                        ifSelect.append($("<option />").val(val["key"]).text(val["value"]));
+                    } else {
+                        hasOptions = false;
+                    }
+                });
+                if(hasOptions) {
+                    ifSelect.attr('disabled', false);
+                    const elseSelect = $('#else_sequence_id_' + parentID);
+                    elseSelect.empty().attr("disabled", true);
+                }
+            }
+        }
+        function changeSequence(sequenceID, parentID) {
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: {
+                    sequenceID
+                },
+                error: function() {
+                    alert('Some error occurred!');
+                    //$('#info').html('<p>An error has occurred</p>');
+                },
+                //dataType: 'jsonp',
+                success: function(data) {
+                    populateIfOptions(data, parentID);
+                }
+            });
         }
         $(document).ready(function() {
-            var currentSelected = $('.sequence').find(':selected').text();
-            alert(currentSelected);
             $('.sequence').on('change', function (e) {
-                const sequenceID = $(this).data("id");
-                alert(sequenceID);
+                const selectedSequence = $(this).find(":selected");
+                const parentID = selectedSequence.attr('data-parent');
+                const sequenceID = selectedSequence.attr('data-sequence');
+                console.log('sequence', sequenceID);
+                if(sequenceID === '-1') {
+                    const ifSelect = $('#if_option_id_' + parentID);
+                    const elseSelect = $('#else_sequence_id_' + parentID);
+                    ifSelect.empty().attr("disabled", true);
+                    elseSelect.empty().attr("disabled", true);
+                } else {
+                    changeSequence(sequenceID, parentID);
+                }
+            });
+
+            $('.sequence-option').on('change', function (e) {
+                const parentID = $(this).attr("data-parent");
+                const sequenceID = $(this).attr("data-sequence");
+                console.log('here');
             });
         });
 
