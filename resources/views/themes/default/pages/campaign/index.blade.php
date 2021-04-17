@@ -61,6 +61,8 @@
                                                         <!-- item-->
                                                         <a href="{!! route('sequence.getSort', ['campaign' => $record->id]) !!}" class="dropdown-item">Sort Sequence</a>
                                                         <!-- item-->
+                                                        <a href="{!! route('sequence.getConditionals', ['campaign' => $record->id]) !!}" class="dropdown-item">Conditionals</a>
+                                                        <!-- item-->
                                                         <a href="{!! route('campaign.contact.import', $record->id) !!}" class="dropdown-item">Import Contacts</a>
                                                         <!-- item-->
                                                         <a href="{!! route('campaign.contact.view', $record->id) !!}" class="dropdown-item">View Contacts</a>

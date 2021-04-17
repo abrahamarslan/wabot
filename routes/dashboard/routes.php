@@ -39,5 +39,10 @@ Route::group(array('prefix' => 'dashboard', 'middleware' => 'App\Http\Middleware
 
         Route::get('/sort/{campaign}', array('uses'=>'App\Http\Controllers\sequence\SequenceController@getSort', 'as'=>'sequence.getSort'));
         Route::post('/sort', array('uses'=>'App\Http\Controllers\sequence\SequenceController@postSort', 'as'=>'sequence.postSort'));
+
+        Route::get('/conditionals/{campaign}', array('uses'=>'App\Http\Controllers\sequence\ConditionalController@getConditionals', 'as'=>'sequence.getConditionals'));
+        Route::post('/conditionals', array('uses'=>'App\Http\Controllers\sequence\ConditionalController@postConditionals', 'as'=>'sequence.postConditionals'));
+
+
     });
 });
