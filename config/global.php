@@ -32,4 +32,9 @@ return array(
         'upload_folder_path_resized'            => '/images/user/resized/',
     ),
 
+    'twilio' => array(
+        'sandbox_number'                        => '+1 415 523 8886',
+        'sandbox_message'                       => 'join pain-dinner'
+    ),
+
 );
