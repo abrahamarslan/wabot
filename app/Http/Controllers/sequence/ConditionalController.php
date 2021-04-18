@@ -5,6 +5,7 @@ namespace App\Http\Controllers\sequence;
 use App\Http\Controllers\common\DefaultController;
 use App\Http\Controllers\Controller;
 use App\Models\Campaign;
+use App\Models\Conditional;
 use App\Models\Sequence;
 use App\Traits\SequenceStoreTrait;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
@@ -93,6 +94,49 @@ class ConditionalController extends DefaultController
             $data = [
                 'type' => 'error',
                 'message' => 'Some error occurred in getting the records.',
+                'data' => null,
+                'code' => 500
+            ];
+            return response()->json($data,500);
+        }
+    }
+
+    // Save Conditional for a sequence of a campaign
+    public function postAddConditional(Request $request) {
+        try {
+            $conditional = null;
+            $data = $request->all();
+            $exists = Conditional::where('campaign_id', $data['campaign_id'])->where('sequence_id', $data['sequence_id'])->first();
+            if(!$exists) {
+                $conditional = new Conditional($data);
+            } else {
+                $conditional = $exists;
+            }
+            //$campaign = Campaign::findOrFail($data['campaign_id']);
+            $conditional->hasCondition = ($data['hasCondition'] == 'true' ? 1 : 0);
+            $conditional->save();
+            $data = [
+                'type' => 'success',
+                'message' => 'Record updated successfully.',
+                'data' => [],
+                'code' => 200
+            ];
+            return response()->json($data,200);
+        } catch (\Exception $e) {
+            $this->messageBag->add('exception_message', $e->getMessage());
+            activity()
+                ->withProperties([
+                    'content_id' => 0, // Exception
+                    'contentType' => 'Exception',
+                    'action' => 'index',
+                    'description' => 'DefaultController',
+                    'details' => 'Error in creating view: ' . $e->getMessage(),
+                    'data' => json_encode($e)
+                ])
+                ->log($e->getMessage());
+            $data = [
+                'type' => 'error',
+                'message' => 'Some error occurred in creating the record.',
                 'data' => null,
                 'code' => 500
             ];
