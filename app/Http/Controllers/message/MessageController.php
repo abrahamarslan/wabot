@@ -4,6 +4,7 @@ namespace App\Http\Controllers\message;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Twilio\TwiML\MessagingResponse;
 
 class MessageController extends Controller
 {
@@ -13,8 +14,14 @@ class MessageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Request $request)
+    public function __invoke(MessagingResponse $messageResponse)
     {
-        //
+        $responder = ResponderFactory::create();
+        $messageResponse->message($responder->respond());
+
+        return response($messageResponse, 200)->header(
+            'Content-Type',
+            'text/xml'
+        );
     }
 }
