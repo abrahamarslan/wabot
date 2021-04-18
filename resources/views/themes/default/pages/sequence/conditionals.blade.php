@@ -144,7 +144,7 @@
                 if(hasOptions) {
                     ifSelect.attr('disabled', false);
                     const elseSelect = $('#else_sequence_id_' + parentID);
-                    elseSelect.empty().attr("disabled", true);
+                    elseSelect.attr("disabled", false);
                 }
             }
         }
@@ -175,7 +175,7 @@
                     const ifSelect = $('#if_option_id_' + parentID);
                     const elseSelect = $('#else_sequence_id_' + parentID);
                     ifSelect.empty().attr("disabled", true);
-                    elseSelect.empty().attr("disabled", true);
+                    elseSelect.attr("disabled", true);
                 } else {
                     changeSequence(sequenceID, parentID);
                 }
