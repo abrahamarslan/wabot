@@ -33,8 +33,11 @@ return array(
     ),
 
     'twilio' => array(
-        'sandbox_number'                        => '+1 415 523 8886',
-        'sandbox_message'                       => 'join pain-dinner'
+        'sandbox_number'                        => '+14155238886',
+        'WA_NUMBER'                             => '+19284400489',
+        'sandbox_message'                       => 'join pain-dinner',
+        'TWILIO_SID'                            => 'AC41ce78f1fd50aecc64240d3d640c7432',
+        'TWILIO_AUTH_TOKEN'                     => '128fb399d716799c7fd584a5d9f1bc49'
     ),
 
 );

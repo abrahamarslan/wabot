@@ -16,5 +16,5 @@ include 'dashboard/routes.php';
 include 'authentication/routes.php';
 include 'role/routes.php';
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('authentication.login.index');
 });

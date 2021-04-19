@@ -4,11 +4,13 @@
 namespace App\Factories;
 
 
+use App\Responders\InvalidKeywordResponder;
+use Illuminate\Support\Facades\Log;
+
 class ResponderFactory
 {
     /**
      * Responder
-     * @var App\Contracts\ResponderContract;
      */
     protected $responder;
 
@@ -24,6 +26,10 @@ class ResponderFactory
     {
         $this->phoneNumber = $phonenumber;
         $this->message = $message;
+        Log::info('Here is the message');
+        //Log::info(print_r($messageResponse, true));
+        Log::info($message);
+        $this->option = $option;
         $this->responder = $this->resolveResponder($this->message, $this->option);
     }
     /**
@@ -34,8 +40,7 @@ class ResponderFactory
         $self =  new static(
             request()->input('From'),
             request()->input('Body'),
-            request()->input('Longitude'),
-            request()->input('Latitude')
+            request()->input('Message')
         );
 
         return $self->responder;
@@ -55,7 +60,6 @@ class ResponderFactory
      * @param string|null $message
      * @param string|null $longitude
      * @param string|null $latitude
-     * @return App\Contracts\Respondent
      */
     public function resolveResponder(?string $message, ?string $option)
     {

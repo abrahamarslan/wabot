@@ -8,7 +8,7 @@ class MessageResponder extends Responder
 {
     public static function shouldRespond($message, $option)
     {
-        return $option;
+        return $message;
     }
     public function respond()
     {
