@@ -7,6 +7,8 @@ class MessageHelper
     public static function hasLastSentMessage($phoneNumber) {
         try {
 
+        } catch (Exception $e) {
+
         }
     }
     /**

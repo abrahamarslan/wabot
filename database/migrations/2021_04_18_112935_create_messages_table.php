@@ -16,7 +16,10 @@ class CreateMessagesTable extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
             $table->foreignId('campaign_id')->constrained('campaigns')->onDelete('cascade');
-            $table->foreignId('sequence_id')->constrained('sequences')->onDelete('cascade');
+            $table->foreignId('sequence_id')->onDelete('cascade');
+            $table->foreignId('contact_id')->constrained('contacts')->onDelete('cascade');
+            $table->string('SmsMessageSid',255)->nullable()->default('-1');
+            $table->string('ProfileName',255)->nullable()->default('-1');
             $table->string('from_number',255)->nullable()->default('-1');
             $table->string('to_number',255)->nullable()->default('-1');
             $table->boolean('isSent')->nullable()->default(false);
