@@ -47,7 +47,8 @@
             "helpers/GeneralHelper.php",
             "helpers/ActivationHelper.php",
             "helpers/EmailHelper.php",
-            "helpers/ImageHelper.php"
+            "helpers/ImageHelper.php",
+            "helpers/MessageHelper.php"
         ]
     },
     "autoload-dev": {

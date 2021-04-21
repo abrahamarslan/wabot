@@ -86,13 +86,13 @@ class ReceiverController extends Controller
 
                 }
             }
-        $messageResponse->message('Are you interested in this job?');
+        //$messageResponse->message('Are you interested in this job?');
         //$from = $request->input('From');
         //$body = $request->input('Body');
-        return response($messageResponse, 200)->header(
-            'Content-Type',
-            'text/xml'
-        );
+//        return response($messageResponse, 200)->header(
+//            'Content-Type',
+//            'text/xml'
+//        );
         } catch (\Exception $e) {
 
         }

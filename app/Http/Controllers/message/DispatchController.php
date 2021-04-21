@@ -14,7 +14,8 @@ class DispatchController extends Controller
     protected $data = array();
     public function index(Campaign $campaign) {
         try {
-            self::startCampaign($campaign->id);
+            $result = self::startCampaign($campaign->id);
+            dd($result);
             //$result = self::sendWhatsAppMessage('This is my first message, brah!', 'whatsapp:+917877045455');
             //dd($result);
         } catch (\Exception $e) {
@@ -25,7 +26,8 @@ class DispatchController extends Controller
 
     public function startCampaign($campaignID) {
         try {
-
+            $campaign = \MessageHelper::startCampaign($campaignID);
+            return $campaign;
         } catch (\Exception $e) {
             dd($e);
             abort(500);

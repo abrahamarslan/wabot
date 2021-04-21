@@ -203,9 +203,9 @@ class MessageHelper
         try {
             $campaign = Campaign::findOrFail($campaignID);
             $sequences = $campaign->sequences()->get();
+            // Get all contacts
+            $contacts = $campaign->contacts()->get();
             foreach ($sequences as $sequence) {
-                // Get all contacts
-                $contacts = $campaign->contacts()->get();
                 if($contacts && !empty($contacts)){
                     foreach ($contacts as $contact) {
                         $result = self::sendSequence($campaign->id, $sequence->id, $contact->id);
@@ -213,9 +213,7 @@ class MessageHelper
                     }
                 }
             }
-
-            //$result = self::sendWhatsAppMessage('This is my first message, brah!', 'whatsapp:+917877045455');
-            //dd($result);
+            return true;
         } catch (\Exception $e) {
             dd($e);
             return null;
@@ -248,7 +246,7 @@ class MessageHelper
                         'send',
                         'out',
                         $body,
-                        $sendMessage->messagingServiceSid
+                        (isset($sendMessage->messagingServiceSid) ? $sendMessage->messagingServiceSid : -1)
                     );
                     return true;
                 }
