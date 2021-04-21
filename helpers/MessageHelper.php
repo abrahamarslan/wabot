@@ -13,6 +13,31 @@ class MessageHelper
         }
     }
 
+    public static function getContact($number) {
+        try {
+            $num = 3;
+            $contactLength = strlen($number);
+            $contactNumber = substr($number, $num, $contactLength);
+            if($contactNumber) {
+                $contact = \App\Models\Contact::where('contact',$contactNumber)->first();
+                return $contact;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    public static function getSequence($sequenceID) {
+        try {
+            $record = \App\Models\Sequence::where('id',$sequenceID)->first();
+            return ($record == null ? false : $record);
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
     public static function doesContactHaveRunningCampaign($contactID) {
         try {
             $hasRunning = \App\Models\Running::where('contact_id',$contactID)->first();
@@ -22,11 +47,20 @@ class MessageHelper
         }
     }
 
+    public static function completeCampaignForContact($campaignID, $contactID) {
+        try {
+            $hasRunning = \App\Models\Running::where('contact_id',$contactID)->where('campaign_id', $campaignID)->delete();
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
     public static function getNextSequenceID($sequenceID) {
         try {
             $sequence = \App\Models\Sequence::where('id',$sequenceID)->first();
             $nextSequenceOrder = $sequence->order + 1;
-            $hasNextSequence = \App\Models\Sequence::where('order',$nextSequenceOrder)->first();
+            $hasNextSequence = \App\Models\Sequence::where('campaign_id', $sequence->campaign_id)->where('order',$nextSequenceOrder)->first();
             if($hasNextSequence) {
                 return $hasNextSequence->id;
             } else {
@@ -53,17 +87,47 @@ class MessageHelper
         }
     }
 
+    public static function updateRunning($runningID, $lastSequenceID) {
+        try {
+            $running = \App\Models\Running::findOrFail($runningID);
+            $running->last_sequence_id = $lastSequenceID;
+            $nextSequenceID = self::getNextSequenceID($lastSequenceID);
+            $running->next_sequence_id = $nextSequenceID;
+            $running->save();
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
     public static function insertMessage($campaignID, $sequenceID, $contactID,
-     $fromNumber, $toNumber, $isSent=0, $direction='send', $type= 'out', $body='' ) {
+     $fromNumber, $toNumber, $isSent=0, $direction='send', $type= 'out', $body='', $response=null) {
         try {
             $message = new \App\Models\Message;
             $message->campaign_id = $campaignID;
             $message->contact_id = $contactID;
             $message->sequence_id = $sequenceID;
-            $message->last_sequence_id = $sequenceID;
-            $nextSequenceID = self::getNextSequenceID($sequenceID);
-            $running->next_sequence_id = $nextSequenceID;
-            $running->save();
+            if($response) {
+                $message->SmsMessageSid = $response->messagingServiceSid;
+                $message->response = $response;
+            }
+            $message->from_number = $fromNumber;
+            $message->to_number = $toNumber;
+            $message->isSent = $isSent;
+            $message->direction = $direction;
+            $message->type = $type;
+            $message->body = $body;
+            $message->save();
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    public static function insertReceivedMessage($array) {
+        try {
+            $message = new \App\Models\Message($array);
+            $message->save();
             return true;
         } catch (Exception $e) {
             return false;
@@ -96,7 +160,7 @@ class MessageHelper
     public static function hasOptions($sequence) {
         try {
             $optArray = array();
-            $i = 1;
+            $i = 0;
             foreach ($sequence->options as $option) {
                 if(is_null($option["options"]) or empty($option["options"])) {
                     continue;

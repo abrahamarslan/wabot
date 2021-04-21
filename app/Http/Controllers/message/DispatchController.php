@@ -14,7 +14,7 @@ class DispatchController extends Controller
     protected $data = array();
     public function index(Campaign $campaign) {
         try {
-
+            self::startCampaign($campaign->id);
             //$result = self::sendWhatsAppMessage('This is my first message, brah!', 'whatsapp:+917877045455');
             //dd($result);
         } catch (\Exception $e) {
@@ -32,7 +32,8 @@ class DispatchController extends Controller
                 $contacts = $campaign->contacts()->get();
                 if($contacts && !empty($contacts)){
                     foreach ($contacts as $contact) {
-                        $this->sendSequence($campaign->id, $sequence->id, $contact->id);
+                        $result = $this->sendSequence($campaign->id, $sequence->id, $contact->id);
+                        return $result;
                     }
                 }
             }
@@ -70,20 +71,12 @@ class DispatchController extends Controller
                         'send',
                         'out',
                         $body,
-                        $response = $sendMessage->properties
-                    )
-                }
-            } else {
-                //Get the current running
-                if($conditional = \MessageHelper::doesSequenceHaveConditional($sequence->id, $campaign->id)) {
-                    if($conditional->hasCondition == 1) {
-
-                    } else {
-                        //Send message
-                    }
+                        $sendMessage->messagingServiceSid
+                    );
+                    return true;
                 }
             }
-
+            return false;
         } catch (\Exception $e) {
             dd($e);
             abort(500);
