@@ -45,7 +45,21 @@ Route::group(array('prefix' => 'dashboard', 'middleware' => 'App\Http\Middleware
 
         Route::post('/get-options', array('uses'=>'App\Http\Controllers\sequence\ConditionalController@postConditionalOptions', 'as'=>'sequence.postConditionalOptions'));
         Route::post('/add-conditional', array('uses'=>'App\Http\Controllers\sequence\ConditionalController@postAddConditional', 'as'=>'sequence.postAddConditional'));
+    });
 
+    //Export
+    Route::group(array('prefix' => 'export'), function () {
+        Route::get('/', array('uses'=>'App\Http\Controllers\campaign\CampaignController@index', 'as'=>'campaign.index'));
+        Route::get('/create', array('uses'=>'App\Http\Controllers\campaign\CampaignController@create', 'as'=>'campaign.create'));
+        Route::post('/create', array('uses'=>'App\Http\Controllers\campaign\CampaignController@store', 'as'=>'campaign.store'));
+    });
 
+    //Setting
+    Route::group(array('prefix' => 'setting'), function () {
+        Route::get('/', array('uses'=>'App\Http\Controllers\campaign\CampaignController@index', 'as'=>'campaign.index'));
+        Route::get('/create', array('uses'=>'App\Http\Controllers\campaign\CampaignController@create', 'as'=>'campaign.create'));
+        Route::post('/create', array('uses'=>'App\Http\Controllers\campaign\CampaignController@store', 'as'=>'campaign.store'));
+        Route::get('/edit/{id}', array('uses'=>'App\Http\Controllers\sequence\SequenceController@update', 'as'=>'sequence.update'));
+        Route::post('/edit/{id}', array('uses'=>'App\Http\Controllers\sequence\SequenceController@postUpdate', 'as'=>'sequence.postUpdate'));
     });
 });
