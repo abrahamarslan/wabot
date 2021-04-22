@@ -58,7 +58,7 @@
                 </li>
 
                 <li>
-                    <a href="#">
+                    <a href="{!! route('export.index') !!}">
                         <i class="mdi mdi-file"></i>
                         <span> Export </span>
                     </a>
