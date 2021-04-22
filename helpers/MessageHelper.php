@@ -14,13 +14,14 @@ class MessageHelper
             $hasConditional = \App\Models\Conditional::where('campaign_id',$campaignID)->where('sequence_id', $sequenceID)->first();
             return ($hasConditional == null ? false : $hasConditional);
         } catch (Exception $e) {
+            dd($e);
             return false;
         }
     }
 
     public static function getContact($number) {
         try {
-            $num = 3;
+            $num = 2;
             $contactLength = strlen($number);
             $contactNumber = substr($number, $num, $contactLength);
             if($contactNumber) {
@@ -30,6 +31,7 @@ class MessageHelper
                 return false;
             }
         } catch (Exception $e) {
+            dd($e);
             return false;
         }
     }
@@ -39,6 +41,7 @@ class MessageHelper
             $record = \App\Models\Sequence::where('id',$sequenceID)->first();
             return ($record == null ? false : $record);
         } catch (Exception $e) {
+            dd($e);
             return false;
         }
     }
@@ -48,6 +51,7 @@ class MessageHelper
             $hasRunning = \App\Models\Running::where('contact_id',$contactID)->first();
             return ($hasRunning == null ? false : $hasRunning);
         } catch (Exception $e) {
+            dd($e);
             return false;
         }
     }
@@ -72,6 +76,7 @@ class MessageHelper
                 return -1;
             }
         } catch (Exception $e) {
+            dd($e);
             return -1;
         }
     }
@@ -88,6 +93,7 @@ class MessageHelper
             $running->save();
             return true;
         } catch (Exception $e) {
+            dd($e);
             return false;
         }
     }
@@ -101,6 +107,7 @@ class MessageHelper
             $running->save();
             return true;
         } catch (Exception $e) {
+            dd($e);
             return false;
         }
     }
@@ -125,6 +132,7 @@ class MessageHelper
             $message->save();
             return true;
         } catch (Exception $e) {
+            dd($e);
             return false;
         }
     }
@@ -135,6 +143,7 @@ class MessageHelper
             $message->save();
             return true;
         } catch (Exception $e) {
+            dd($e);
             return false;
         }
     }
@@ -145,6 +154,7 @@ class MessageHelper
             $running->delete();
             return true;
         } catch (Exception $e) {
+            dd($e);
             return false;
         }
     }
@@ -158,6 +168,7 @@ class MessageHelper
             $queue->save();
             return true;
         } catch (Exception $e) {
+            dd($e);
             return false;
         }
     }
@@ -175,6 +186,7 @@ class MessageHelper
             }
             return $optArray;
         } catch (Exception $e) {
+            dd($e);
             return false;
         }
     }
@@ -186,14 +198,15 @@ class MessageHelper
             $message .= $sequence->body;
             $options = self::hasOptions($sequence);
             if(!empty($options) and !is_null($options) and $options) {
-                $message .= '\n';
-                foreach ($options as $key => $value) {
-                    $message .= $key . '. ' . $value;
-                    $message .= '\n';
+                $message .= "\n";
+                foreach ($options as $option) {
+                    $message .= $option['key'] . '. ' . $option['value'];
+                    $message .= "\n";
                 }
             }
             return $message;
         } catch (Exception $e) {
+            dd($e);
             return false;
         }
     }
@@ -202,7 +215,7 @@ class MessageHelper
     public static function startCampaign($campaignID) {
         try {
             $campaign = Campaign::findOrFail($campaignID);
-            $sequences = $campaign->sequences()->get();
+            $sequences = $campaign->sequences()->orderBy('order','ASC')->get();
             // Get all contacts
             $contacts = $campaign->contacts()->get();
             foreach ($sequences as $sequence) {
@@ -220,6 +233,13 @@ class MessageHelper
         }
     }
 
+    public static function dumpOnTable($name, $data) {
+        $dump = new \App\Models\Dump;
+        $dump->name = $name;
+        $dump->dump = $data;
+        $dump->save();
+    }
+
 
     public static function sendSequence($campaignID, $sequenceID, $contactID) {
         try {
@@ -234,7 +254,7 @@ class MessageHelper
                 }
             } else if ($sequence->order == 1) {
                 if($body = \MessageHelper::composeMessage($sequence->id)) {
-                    $sendMessage = self::sendWhatsAppMessage($body, '+'.$contact->country_code.$contact->contact);
+                    $sendMessage = self::sendWhatsAppMessage($body, 'whatsapp:+'.$contact->country_code.$contact->contact);
                     $update = \MessageHelper::insertRunning($campaign->id, $sequence->id, $contact->id);
                     $message = \MessageHelper::insertMessage(
                         $campaign->id,
@@ -251,6 +271,7 @@ class MessageHelper
                     return true;
                 }
             }
+            dd('here');
             return false;
         } catch (\Exception $e) {
             dd($e);

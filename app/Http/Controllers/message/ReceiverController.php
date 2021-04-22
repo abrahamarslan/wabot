@@ -51,6 +51,23 @@ class ReceiverController extends Controller
                     $nextSequenceID = $hasRunningCampaign->next_sequence_id;
                     $lastSequence = \MessageHelper::getSequence($lastSequenceID);
                     $nextSequence = \MessageHelper::getSequence($nextSequenceID);
+                    \MessageHelper::insertReceivedMessage([
+                       'campaign_id'        =>  $campaignID,
+                       'sequence_id'        =>  $lastSequenceID,
+                       'contact_id'        =>  $contact->id,
+                       'SmsMessageSid'        =>  $SmsMessageSid,
+                       'ProfileName'        =>  $ProfileName,
+                       'from_number'        =>  $from_number,
+                       'to_number'        =>  $to_number,
+                       'isSent'        =>  $isSent,
+                       'direction'        => $direction,
+                       'type'        =>  $type,
+                       'send_date'        =>  $receiveDate,
+                       'errorCode'        =>  $errorCode,
+                       'body'        =>  $body,
+                       'response'        =>  $response,
+
+                    ]);
                     // Check if there is any next sequence to send
                     if($nextSequence){
                         //Get the conditionals of the next sequence
@@ -65,36 +82,69 @@ class ReceiverController extends Controller
                                 //Check if the sequence option selected is same as conditional
                                 if($options[$nextConditional->is_sequence_option] == $body or $nextConditional->is_sequence_option == $body) {
                                     // Send this sequence
-                                    self::sendSequence($campaignID, $nextSequence->id, $contact->id, $hasRunningCampaign->id);
+                                    $result = self::sendSequence($campaignID, $nextSequence->id, $contact->id, $hasRunningCampaign->id);
+                                    \MessageHelper::dumpOnTable('sequence sending if option = conditional', $result);
+                                    $messageResponse->message($result);
+                                    return response($messageResponse, 200)->header(
+                                        'Content-Type',
+                                        'text/xml'
+                                    );
+
                                 } else {
                                     // Send the else sequence
-                                    self::sendSequence($campaignID, $nextConditional->else_sequence, $contact->id, $hasRunningCampaign->id);
+                                    $nextID = ($nextConditional->else_sequence == -1 ? \MessageHelper::getNextSequenceID($nextSequenceID) : $nextConditional->else_sequence);
+                                    $result = self::sendSequence($campaignID, $nextID, $contact->id, $hasRunningCampaign->id);
+                                    $messageResponse->message($result);
+                                    \MessageHelper::dumpOnTable('sequence sending if else', $result);
+
+                                    return response($messageResponse, 200)->header(
+                                        'Content-Type',
+                                        'text/xml'
+                                    );
                                 }
                             }
                         } else {
                             //Just send the next sequence
-                            self::sendSequence($campaignID, $nextSequence->id, $contact->id, $hasRunningCampaign->id);
+                            $result = self::sendSequence($campaignID, $nextSequence->id, $contact->id, $hasRunningCampaign->id);
+                            \MessageHelper::dumpOnTable('sending sequence', $result);
+                            $messageResponse->message($result);
+                            return response($messageResponse, 200)->header(
+                                'Content-Type',
+                                'text/xml'
+                            );
                         }
                     } else {
                         //There is nothing else to send.
                         //End campaign
+                        \MessageHelper::dumpOnTable('Ending campaign', null);
                         \MessageHelper::completeCampaignForContact($campaignID, $contact->id);
+                        $messageResponse->message('Bye!');
+                        return response($messageResponse, 200)->header(
+                            'Content-Type',
+                            'text/xml'
+                        );
                         return true;
                     }
                 } else {
+                    \MessageHelper::dumpOnTable('No campaign', null);
                     // Check if it has queued campaigns
-
+                    $messageResponse->message('Some error occurred - 1050');
+                    return response($messageResponse, 200)->header(
+                        'Content-Type',
+                        'text/xml'
+                    );
                 }
             }
         //$messageResponse->message('Are you interested in this job?');
         //$from = $request->input('From');
         //$body = $request->input('Body');
-//        return response($messageResponse, 200)->header(
-//            'Content-Type',
-//            'text/xml'
-//        );
         } catch (\Exception $e) {
-
+            \MessageHelper::dumpOnTable('Some error in Receiver Controller', null);
+            $messageResponse->message('Error');
+            return response($messageResponse, 200)->header(
+                'Content-Type',
+                'text/xml'
+            );
         }
     }
 
@@ -106,8 +156,8 @@ class ReceiverController extends Controller
             $sequence = Sequence::findOrFail($sequenceID);
             $contact = Contact::findOrFail($contactID);
             if($body = \MessageHelper::composeMessage($sequence->id)) {
-                $sendMessage = self::sendWhatsAppMessage($body, '+'.$contact->country_code.$contact->contact);
-                $update = \MessageHelper::updateRunning($sequence->id, $runningID);
+                //$sendMessage = self::sendWhatsAppMessage($body, 'whatsapp:+'.$contact->country_code.$contact->contact);
+                $update = \MessageHelper::updateRunning($runningID, $sequence->id);
                 $message = \MessageHelper::insertMessage(
                     $campaign->id,
                     $sequence->id,
@@ -118,12 +168,14 @@ class ReceiverController extends Controller
                     'send',
                     'out',
                     $body,
-                    $sendMessage->messagingServiceSid
+                    null
                 );
-                return true;
+                return $body;
             }
             return false;
         } catch (\Exception $e) {
+            activity()
+                ->log(json_encode($e));
             dd($e);
             abort(500);
         }

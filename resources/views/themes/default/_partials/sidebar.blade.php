@@ -57,20 +57,20 @@
                     </ul>
                 </li>
 
-{{--                <li>--}}
-{{--                    <a href="#">--}}
-{{--                        <i class="mdi mdi-file"></i>--}}
-{{--                        <span> Export </span>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
+                <li>
+                    <a href="#">
+                        <i class="mdi mdi-file"></i>
+                        <span> Export </span>
+                    </a>
+                </li>
 
-{{--                <li>--}}
-{{--                    <a href="#">--}}
-{{--                        <i class="mdi mdi-cog"></i>--}}
-{{--                        <span class="badge badge-purple float-right">New</span>--}}
-{{--                        <span> Settings </span>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
+                <li>
+                    <a href="#">
+                        <i class="mdi mdi-cog"></i>
+                        <span class="badge badge-purple float-right">New</span>
+                        <span> Settings </span>
+                    </a>
+                </li>
 
             </ul>
 

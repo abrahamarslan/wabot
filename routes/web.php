@@ -16,5 +16,7 @@ include 'dashboard/routes.php';
 include 'authentication/routes.php';
 include 'role/routes.php';
 Route::get('/', function () {
+    $contact = MessageHelper::composeMessage(4);
+    dd($contact);
     return redirect()->route('authentication.login.index');
 });
