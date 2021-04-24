@@ -118,7 +118,7 @@ class ReceiverController extends Controller
                         //End campaign
                         \MessageHelper::dumpOnTable('Ending campaign', null);
                         \MessageHelper::completeCampaignForContact($campaignID, $contact->id);
-                        $messageResponse->message('Bye!');
+                        $messageResponse->message(\GeneralHelper::getSetting('FINAL_MESSAGE'));
                         return response($messageResponse, 200)->header(
                             'Content-Type',
                             'text/xml'

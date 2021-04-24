@@ -218,12 +218,12 @@ class MessageHelper
             $sequences = $campaign->sequences()->orderBy('order','ASC')->get();
             // Get all contacts
             $contacts = $campaign->contacts()->get();
-            foreach ($sequences as $sequence) {
-                if($contacts && !empty($contacts)){
-                    foreach ($contacts as $contact) {
-                        $result = self::sendSequence($campaign->id, $sequence->id, $contact->id);
-                        return $result;
-                    }
+            $firstSequence = $sequences->first();
+            if($contacts && !empty($contacts)){
+                foreach ($contacts as $contact) {
+                    \Illuminate\Support\Facades\Log::info('Sending to ' . $contact);
+                    $result = self::sendSequence($campaign->id, $firstSequence->id, $contact->id);
+                    \Illuminate\Support\Facades\Log::info('Result ' . $result);
                 }
             }
             return true;
