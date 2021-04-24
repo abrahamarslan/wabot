@@ -162,7 +162,7 @@ class ReceiverController extends Controller
                     $campaign->id,
                     $sequence->id,
                     $contact->id,
-                    config('global.twilio.sandbox_number'),
+                    \GeneralHelper::getSetting('SANDBOX_NUMBER'),
                     '+'.$contact->country_code.$contact->contact,
                     1,
                     'send',
@@ -174,8 +174,6 @@ class ReceiverController extends Controller
             }
             return false;
         } catch (\Exception $e) {
-            activity()
-                ->log(json_encode($e));
             dd($e);
             abort(500);
         }
@@ -183,9 +181,9 @@ class ReceiverController extends Controller
 
     public function sendWhatsAppMessage(string $message, string $recipient)
     {
-        $twilio_whatsapp_number = config('global.twilio.sandbox_number');
-        $sid = getenv("TWILIO_SID");
-        $token = getenv("TWILIO_TOKEN");
+        $twilio_whatsapp_number = \GeneralHelper::getSetting('SANDBOX_NUMBER');
+        $sid = \GeneralHelper::getSetting('TWILIO_SID');;
+        $token = \GeneralHelper::getSetting('TWILIO_TOKEN');
 
         $client = new Client($sid, $token);
         return $client->messages->create($recipient, array('from' => "whatsapp:$twilio_whatsapp_number", 'body' => $message));
