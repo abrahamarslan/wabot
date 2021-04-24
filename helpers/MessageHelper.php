@@ -65,7 +65,15 @@ class MessageHelper
 
     public static function completeCampaignForContact($campaignID, $contactID) {
         try {
-            $hasRunning = \App\Models\Running::where('contact_id',$contactID)->where('campaign_id', $campaignID)->delete();
+            $contact = Contact::findOrFail($contactID);
+            $contacts = Contact::where('contact', $contact->contact)->get();
+            foreach ($contacts as $row) {
+                $hasRunning = \App\Models\Running::where('contact_id',$row->id)->first();
+                if($hasRunning) {
+                    $hasRunning->delete();
+                    break;
+                }
+            }
             return true;
         } catch (Exception $e) {
             return false;

@@ -8,14 +8,17 @@ use App\Models\Contact;
 use App\Models\Sequence;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Http\Request;
+use Illuminate\Support\MessageBag;
 use Twilio\Rest\Client;
 class DispatchController extends Controller
 {
     protected $data = array();
+    protected $messageBag = null;
     public function index(Campaign $campaign) {
         try {
+            $this->messageBag = new MessageBag();
             if($campaign->hasStarted == 'True') {
-                session()->flash('success_message','Campaign has already started!');
+                $this->messageBag->add('error_msg', 'Campaign has already started!');
                 return redirect()->route('campaign.index');
             }
             $result = self::startCampaign($campaign->id);
