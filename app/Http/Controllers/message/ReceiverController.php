@@ -150,6 +150,8 @@ class ReceiverController extends Controller
 
 
 
+
+
     public function sendSequence($campaignID, $sequenceID, $contactID, $runningID) {
         try {
             $campaign = Campaign::findOrFail($campaignID);

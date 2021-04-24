@@ -86,6 +86,15 @@
                                                                 </select>
                                                             </div>
                                                         </div>
+                                                        <div class="form-group row">
+                                                            <label class="col-md-2 col-form-label" for="example-helping"><strong> Action </strong></label>
+                                                            <div class="col-md-10">
+                                                                <select id="action_sequence_id_{!! $row->id !!}" data-id="{!! $row->id !!}" class="form-control sequence-action">
+                                                                    <option value="0" class="sequence-action-option" data-parent="{!! $row->id !!}">Continue</option>
+                                                                    <option value="1" class="sequence-action-option" data-parent="{!! $row->id !!}" @if($c->action_sequence == 1) selected @endif>End Campaign</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
                                                     @endif
 
                                                 </div>
@@ -161,6 +170,7 @@
             const ifSequenceID = $('#sequence_id_'+sequenceID).find(':selected').val();
             const isSequenceOption = (ifSequenceID === '-1' ? -1 : $('#if_option_id_' + sequenceID).find(':selected').val());
             const elseSequenceID = $('#else_sequence_id_'+sequenceID).find(':selected').val();
+            const actionSequenceID = $('#action_sequence_id_'+sequenceID).find(':selected').val();
             if(ifSequenceID !== '-1') {
                 hasCondition = true;
             }
@@ -180,7 +190,8 @@
                     sequence_id: sequenceID,
                     if_sequence: ifSequenceID,
                     is_sequence_option: isSequenceOption,
-                    else_sequence: elseSequenceID
+                    else_sequence: elseSequenceID,
+                    action_sequence: actionSequenceID
                 },
                 error: function() {
                     alert('Some error occurred!');

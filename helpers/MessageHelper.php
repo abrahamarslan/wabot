@@ -117,7 +117,12 @@ class MessageHelper
         try {
             $running = \App\Models\Running::findOrFail($runningID);
             $running->last_sequence_id = $lastSequenceID;
-            $nextSequenceID = self::getNextSequenceID($lastSequenceID);
+            $conditional = \App\Models\Conditional::where('campaign_id', $running->campaign_id)->where('sequence_id', $lastSequenceID)->first();
+            if($conditional and $conditional->action_sequence == 1) {
+                $nextSequenceID = -1;
+            } else {
+                $nextSequenceID = self::getNextSequenceID($lastSequenceID);
+            }
             $running->next_sequence_id = $nextSequenceID;
             $running->save();
             return true;

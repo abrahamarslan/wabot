@@ -32,18 +32,6 @@ class ConditionalController extends DefaultController
             return view('themes.default.pages.sequence.conditionals', $this->data);
         } catch (\Exception $e) {
             $this->messageBag->add('exception_message', $e->getMessage());
-            activity()
-                ->by('CampaignController')
-                ->withProperties([
-                    'content_id' => 0, // Exception
-                    'contentType' => 'Exception',
-                    'action' => 'index',
-                    'description' => 'DefaultController',
-                    'details' => 'Error in creating view: ' . $e->getMessage(),
-                    'data' => json_encode($e)
-                ])
-                ->causedBy('index')
-                ->log($e->getMessage());
             return redirect()->back()->withInput()->withErrors(['error_msg' => $e->getMessage()]);
         }
     }
@@ -79,18 +67,6 @@ class ConditionalController extends DefaultController
             return response()->json($data,500);
         } catch (\Exception $e) {
             $this->messageBag->add('exception_message', $e->getMessage());
-            activity()
-                ->by('CampaignController')
-                ->withProperties([
-                    'content_id' => 0, // Exception
-                    'contentType' => 'Exception',
-                    'action' => 'index',
-                    'description' => 'DefaultController',
-                    'details' => 'Error in creating view: ' . $e->getMessage(),
-                    'data' => json_encode($e)
-                ])
-                ->causedBy('index')
-                ->log($e->getMessage());
             $data = [
                 'type' => 'error',
                 'message' => 'Some error occurred in getting the records.',
@@ -114,7 +90,16 @@ class ConditionalController extends DefaultController
             }
             //$campaign = Campaign::findOrFail($data['campaign_id']);
             $conditional->hasCondition = ($data['hasCondition'] == 'true' ? 1 : 0);
-            $conditional->save();
+            $conditional->hasCondition = ($data['hasCondition'] == 'true' ? 1 : 0);
+            if(!$exists) {
+                $conditional->save();
+            } else {
+                $conditional->update($request->except('hasCondition'));
+                $conditional->hasCondition = ($data['hasCondition'] == 'true' ? 1 : 0);
+                $conditional->hasCondition = ($data['hasCondition'] == 'true' ? 1 : 0);
+                $conditional->save();
+            }
+
             $data = [
                 'type' => 'success',
                 'message' => 'Record updated successfully.',
@@ -124,19 +109,9 @@ class ConditionalController extends DefaultController
             return response()->json($data,200);
         } catch (\Exception $e) {
             $this->messageBag->add('exception_message', $e->getMessage());
-            activity()
-                ->withProperties([
-                    'content_id' => 0, // Exception
-                    'contentType' => 'Exception',
-                    'action' => 'index',
-                    'description' => 'DefaultController',
-                    'details' => 'Error in creating view: ' . $e->getMessage(),
-                    'data' => json_encode($e)
-                ])
-                ->log($e->getMessage());
             $data = [
                 'type' => 'error',
-                'message' => 'Some error occurred in creating the record.',
+                'message' => 'Some error occurred in updating the record.',
                 'data' => null,
                 'code' => 500
             ];

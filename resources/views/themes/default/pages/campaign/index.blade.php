@@ -45,7 +45,7 @@
                                             <td>{!! $record->title !!}</td>
                                             <td>{!! date("F d Y", strtotime($record->start_at)) !!}</td>
                                             <td>{!! $record->status !!}</td>
-                                            <td class="{!! ($record->isCompleted == 'Yes' ? 'green-bg' : '') !!}">
+                                            <td class="{!! ($record->hasStarted == 'True' ? 'green-bg' : '') !!}">
                                                 {!! $record->hasStarted !!}
                                             </td>
                                             <td>
