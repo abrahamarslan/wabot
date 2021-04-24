@@ -32,7 +32,6 @@
                                 <tr>
                                     <th>Key</th>
                                     <th>Value</th>
-                                    <th>Created</th>
                                     <th>Options</th>
                                 </tr>
                                 </thead>
@@ -43,7 +42,6 @@
                                         <tr>
                                             <td>{!! $record->setting_key !!}</td>
                                             <td>{!! $record->setting_value !!}</td>
-                                            <td>{!! date("F d Y", strtotime($record->start_at)) !!}</td>
                                             <td>
                                                 <div class="dropdown">
                                                     <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
