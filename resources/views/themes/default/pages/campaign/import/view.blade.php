@@ -40,14 +40,14 @@
 
                                 <tbody>
                                 @if(count($records) > 0)
-                                    @foreach($records as $record)
+                                    @foreach($records as $row)
                                         <tr>
-                                            <td>{!! $record->name !!}</td>
-                                            <td>{!! $record->country_code . $record->contact !!}</td>
+                                            <td>{!! $row->name !!}</td>
+                                            <td>{!! $row->country_code . $row->contact !!}</td>
                                             <td>
-                                                {!! $record->city_name !!}
+                                                {!! $row->city_name !!}
                                             </td>
-                                            <td>{!! date("F d Y", strtotime($record->created_at)) !!}</td>
+                                            <td>{!! date("F d Y", strtotime($row->created_at)) !!}</td>
                                             <td>
                                                 <div class="dropdown">
                                                     <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
@@ -55,9 +55,9 @@
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-right">
                                                         <!-- item-->
-                                                        <a href="{!! route('campaign.contact.results', $record->id) !!}" class="dropdown-item">History</a>
+                                                        <a href="{!! route('campaign.contact.results', ['campaign' => $record->id, 'id' => $row->id ]) !!}" class="dropdown-item">History</a>
                                                         <!-- item-->
-                                                        <a href="{!! route('campaign.contact.delete', $record->id) !!}" class="dropdown-item">Delete</a>
+                                                        <a href="{!! route('campaign.contact.delete', $row->id) !!}" class="dropdown-item">Delete</a>
                                                     </div>
                                                 </div>
                                             </td>

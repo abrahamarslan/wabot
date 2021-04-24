@@ -33,7 +33,7 @@
                                     <th>Title</th>
                                     <th>Start Date</th>
                                     <th>Status</th>
-                                    <th>Is Completed?</th>
+                                    <th>Has Started?</th>
                                     <th>Options</th>
                                 </tr>
                                 </thead>
@@ -46,7 +46,7 @@
                                             <td>{!! date("F d Y", strtotime($record->start_at)) !!}</td>
                                             <td>{!! $record->status !!}</td>
                                             <td class="{!! ($record->isCompleted == 'Yes' ? 'green-bg' : '') !!}">
-                                                {!! $record->isCompleted !!}
+                                                {!! $record->hasStarted !!}
                                             </td>
                                             <td>
                                                 <div class="dropdown">
@@ -67,9 +67,11 @@
                                                         <!-- item-->
                                                         <a href="{!! route('campaign.contact.view', $record->id) !!}" class="dropdown-item">View Contacts</a>
                                                         <!-- item-->
+                                                        <a href="{!! route('message.getDispatch', $record->id) !!}" class="dropdown-item text-success">Start campaign</a>
+                                                        <!-- item-->
                                                         <a href="{!! route('campaign.results', $record->id) !!}" class="dropdown-item">View Results</a>
                                                         <!-- item-->
-                                                        <a href="{!! route('campaign.delete', $record->id) !!}" class="dropdown-item">Delete</a>
+                                                        <a href="{!! route('campaign.delete', $record->id) !!}" class="dropdown-item text-danger">Delete</a>
                                                     </div>
                                                 </div>
                                             </td>

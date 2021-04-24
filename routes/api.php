@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::post('/receive-response', array('uses'=>'App\Http\Controllers\message\ReceiverController', 'as'=>'message.getResponse'));
 Route::post('/receive-message', array('uses'=>'App\Http\Controllers\message\MessageController', 'as'=>'message.receiveMessage'));
-Route::get('/post-message/{campaign}', array('uses'=>'App\Http\Controllers\message\DispatchController@index', 'as'=>'message.getDispatch'));
+Route::get('/start-campaign/{campaign}', array('uses'=>'App\Http\Controllers\message\DispatchController@index', 'as'=>'message.getDispatch'));
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

@@ -767,7 +767,7 @@ class GeneralHelper
      */
     public static function getSetting($settingKey)
     {
-        $settingValue = \App\Setting::where('setting_key',$settingKey)->value('setting_value');
+        $settingValue = \App\Models\Setting::where('setting_key',$settingKey)->value('setting_value');
         return ($settingValue ? $settingValue : null);
     }
 
