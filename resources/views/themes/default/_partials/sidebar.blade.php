@@ -9,24 +9,19 @@
             <div class="dropdown">
                 <a href="#" class="user-name dropdown-toggle h5 mt-2 mb-1 d-block" data-toggle="dropdown"  aria-expanded="false">{!! $user->username !!}</a>
                 <div class="dropdown-menu user-pro-dropdown">
-
                     <!-- item-->
                     <a href="{!! route('authentication.login.getLogout') !!}" class="dropdown-item notify-item">
                         <i class="fe-log-out mr-1"></i>
                         <span>Logout</span>
                     </a>
-
                 </div>
             </div>
         </div>
 
         <!--- Sidemenu -->
         <div id="sidebar-menu">
-
             <ul class="metismenu" id="side-menu">
-
                 <li class="menu-title">Navigation</li>
-
                 <li>
                     <a href="{!! route('dashboard.index') !!}">
                         <i class="mdi mdi-view-dashboard"></i>
@@ -65,15 +60,17 @@
                 </li>
 
                 <li>
-                    <a href="#">
+                    <a href="javascript: void(0);">
                         <i class="mdi mdi-cog"></i>
-                        <span class="badge badge-purple float-right">New</span>
+                        <span class="badge badge-warning float-right">7</span>
                         <span> Settings </span>
                     </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li><a href="{!! route('setting.index') !!}">List</a></li>
+                        <li><a href="{!! route('setting.create') !!}">Create</a></li>
+                    </ul>
                 </li>
-
             </ul>
-
         </div>
         <!-- End Sidebar -->
         <div class="clearfix"></div>

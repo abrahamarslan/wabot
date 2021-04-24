@@ -56,7 +56,7 @@
                                         <div class="form-group row">
                                             <label class="col-md-2 col-form-label" for="example-helping">Options</label>
                                             <div class="col-md-10">
-                                                {{Form::select('status',array('Text'=>'Text','Number' => 'Number','Currency' => 'Currency','Binary' => 'Binary','JSON'=>'JSON'),null, array('id' => 'record-status', 'class' => 'form-control'))}}
+                                                {{Form::select('setting_type',array('Text'=>'Text','Number' => 'Number','Currency' => 'Currency','Binary' => 'Binary','JSON'=>'JSON'),null, array('id' => 'record-status', 'class' => 'form-control'))}}
                                                 <span class="help-block"><small>Options</small></span>
                                             </div>
                                         </div>

@@ -13,7 +13,7 @@ class SettingStoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class SettingStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'setting_key'       =>      'required',
+            'setting_value'     =>      'required',
+            'setting_type'      =>      'required'
         ];
     }
 }

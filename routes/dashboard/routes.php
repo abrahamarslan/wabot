@@ -61,5 +61,6 @@ Route::group(array('prefix' => 'dashboard', 'middleware' => 'App\Http\Middleware
         Route::post('/create', array('uses'=>'App\Http\Controllers\setting\SettingController@store', 'as'=>'setting.store'));
         Route::get('/edit/{id}', array('uses'=>'App\Http\Controllers\setting\SettingController@update', 'as'=>'setting.update'));
         Route::post('/edit/{id}', array('uses'=>'App\Http\Controllers\setting\SettingController@postUpdate', 'as'=>'setting.postUpdate'));
+        Route::get('/delete/{id}', array('uses'=>'App\Http\Controllers\setting\SettingController@delete', 'as'=>'setting.delete'));
     });
 });
