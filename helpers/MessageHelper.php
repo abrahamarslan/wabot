@@ -48,8 +48,15 @@ class MessageHelper
 
     public static function doesContactHaveRunningCampaign($contactID) {
         try {
-            $hasRunning = \App\Models\Running::where('contact_id',$contactID)->first();
-            return ($hasRunning == null ? false : $hasRunning);
+            $contact = Contact::findOrFail($contactID);
+            $contacts = Contact::where('contact', $contact->contact)->get();
+            foreach ($contacts as $row) {
+                $hasRunning = \App\Models\Running::where('contact_id',$row->id)->first();
+                if($hasRunning) {
+                    return $hasRunning;
+                }
+            }
+            return false;
         } catch (Exception $e) {
             dd($e);
             return false;
