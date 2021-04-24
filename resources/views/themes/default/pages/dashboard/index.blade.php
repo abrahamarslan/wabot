@@ -12,7 +12,7 @@
                     <div class="col-xl-3 col-md-6">
                         <div class="card-box widget-user">
                             <div class="text-center">
-                                <h2 class="font-weight-normal text-primary" data-plugin="counterup">0</h2>
+                                <h2 class="font-weight-normal text-primary">{!! $sent_today !!}</h2>
                                 <h5>Sent today</h5>
                             </div>
                         </div>
@@ -21,8 +21,8 @@
                     <div class="col-xl-3 col-md-6">
                         <div class="card-box widget-user">
                             <div class="text-center">
-                                <h2 class="font-weight-normal text-pink" data-plugin="counterup">0</h2>
-                                <h5>Received</h5>
+                                <h2 class="font-weight-normal text-pink">{!! $received_today !!}</h2>
+                                <h5>Received today</h5>
                             </div>
                         </div>
                     </div>
@@ -30,7 +30,7 @@
                     <div class="col-xl-3 col-md-6">
                         <div class="card-box widget-user">
                             <div class="text-center">
-                                <h2 class="font-weight-normal text-warning" data-plugin="counterup">12</h2>
+                                <h2 class="font-weight-normal text-warning">{!! $campaigns !!}</h2>
                                 <h5>Campaigns</h5>
                             </div>
                         </div>
@@ -39,7 +39,7 @@
                     <div class="col-xl-3 col-md-6">
                         <div class="card-box widget-user">
                             <div class="text-center">
-                                <h2 class="font-weight-normal text-info" data-plugin="counterup">51</h2>
+                                <h2 class="font-weight-normal text-info">{!! $users !!}</h2>
                                 <h5>Users</h5>
                             </div>
                         </div>
